@@ -7,7 +7,9 @@ defmodule ElixirStoreWeb.Router do
 
   scope "/api", ElixirStoreWeb do
     pipe_through :api
+    resources "/stores", StoresController
   end
+
 
   # Enables LiveDashboard only for development
   #
