@@ -4,6 +4,10 @@
     "lib/elixir_store/repo.ex",
     "lib/elixir_store_web/channels/",
     "lib/elixir_store_web/telemetry.ex",
-    "lib/elixir_store_web/gettext.ex"
+    "lib/elixir_store_web/gettext.ex",
+    "lib/elixir_store_web/views/error_helpers.ex",
+    "lib/elixir_store_web/router.ex",
+    "lib/elixir_store_web/endpoint.ex",
+    "lib/elixir_store/application.ex"
   ]
 }
