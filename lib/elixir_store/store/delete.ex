@@ -3,7 +3,9 @@ defmodule ElixirStore.Store.Delete do
 
   def call(id) do
     case Ecto.UUID.cast(id) do
-      :error -> {:error, %{message: "Invalid UUID", status: :bad_request}}
+      :error ->
+        {:error, %{message: "Invalid UUID", status: :bad_request}}
+
       {:ok, uuid} ->
         fetch_store(uuid)
         |> delete_store()
@@ -16,7 +18,6 @@ defmodule ElixirStore.Store.Delete do
       store -> {:ok, store}
     end
   end
-
 
   defp delete_store({:error, _error} = error), do: error
   defp delete_store({:ok, store}), do: Repo.delete(store)

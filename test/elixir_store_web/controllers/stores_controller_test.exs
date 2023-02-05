@@ -4,20 +4,22 @@ defmodule ElixirStoreWeb.StoresControllerTest do
   describe "create/2" do
     test "creates a store and returns it, when params are valid", %{conn: conn} do
       params = %{"name" => "nerv store", "segment" => "games"}
+
       response =
         conn
         |> post(Routes.stores_path(conn, :create, params))
         |> json_response(:created)
 
       assert %{
-        "id" => _id,
-        "name" => "nerv store",
-        "segment" => "games"
-      } = response
+               "id" => _id,
+               "name" => "nerv store",
+               "segment" => "games"
+             } = response
     end
 
     test "returns error message, when params are invalid", %{conn: conn} do
       params = %{"name" => nil, "segment" => "games"}
+
       response =
         conn
         |> post(Routes.stores_path(conn, :create, params))
@@ -30,16 +32,17 @@ defmodule ElixirStoreWeb.StoresControllerTest do
   describe "show/2" do
     test "shows a store and returns it, when params are valid", %{conn: conn} do
       {:ok, store} = ElixirStore.create_store(%{"name" => "nerv store", "segment" => "games"})
+
       response =
         conn
         |> get(Routes.stores_path(conn, :show, store.id))
         |> json_response(:ok)
 
       assert %{
-        "id" => _id,
-        "name" => "nerv store",
-        "segment" => "games"
-      } = response
+               "id" => _id,
+               "name" => "nerv store",
+               "segment" => "games"
+             } = response
     end
 
     test "returns an error, when received id don't belong to a store", %{conn: conn} do
@@ -66,35 +69,36 @@ defmodule ElixirStoreWeb.StoresControllerTest do
         |> json_response(:ok)
 
       assert [
-        %{
-          "id" => _,
-          "name" => "asuka",
-          "segment" => "games"
-        },
-        %{
-          "id" => _,
-          "name" => "rei",
-          "segment" => "games"
-        },
-        %{
-          "id" => _,
-          "name" => "shinji",
-          "segment" => "games"
-        }
-      ] = response
+               %{
+                 "id" => _,
+                 "name" => "asuka",
+                 "segment" => "games"
+               },
+               %{
+                 "id" => _,
+                 "name" => "rei",
+                 "segment" => "games"
+               },
+               %{
+                 "id" => _,
+                 "name" => "shinji",
+                 "segment" => "games"
+               }
+             ] = response
     end
   end
 
   describe "delete/2" do
     test "delete store and return status, when params are valid", %{conn: conn} do
       {:ok, store} = ElixirStore.create_store(%{"name" => "nerv store", "segment" => "games"})
+
       response =
         conn
         |> delete(Routes.stores_path(conn, :show, store.id))
 
       assert %Plug.Conn{
-        status: 200
-      } = response
+               status: 200
+             } = response
     end
 
     test "returns an error, when received id don't belong to a store", %{conn: conn} do

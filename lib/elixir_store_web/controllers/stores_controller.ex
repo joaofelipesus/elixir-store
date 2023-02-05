@@ -5,6 +5,7 @@ defmodule ElixirStoreWeb.StoresController do
 
   def index(conn, _params) do
     stores = ElixirStore.list_store()
+
     conn
     |> put_status(:ok)
     |> render("index.json", %{stores: stores})

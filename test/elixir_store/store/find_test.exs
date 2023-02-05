@@ -23,12 +23,12 @@ defmodule ElixirStore.Store.FindTest do
       {:ok, result} = Find.call(store.id)
 
       assert %ElixirStore.Store{
-        id: _id,
-        inserted_at: _inserted_at,
-        name: "nerv",
-        segment: :games,
-        updated_at: _updated_at
-      } = result
+               id: _id,
+               inserted_at: _inserted_at,
+               name: "nerv",
+               segment: :games,
+               updated_at: _updated_at
+             } = result
     end
   end
 end

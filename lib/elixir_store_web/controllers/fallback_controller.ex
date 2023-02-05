@@ -4,7 +4,7 @@ defmodule ElixirStoreWeb.FallbackController do
   def call(conn, {:error, %{message: message, status: :not_found}}) do
     conn
     |> put_status(:not_found)
-    |>put_view(ElixirStoreWeb.ErrorView)
+    |> put_view(ElixirStoreWeb.ErrorView)
     |> render("404.json", %{message: message})
   end
 
