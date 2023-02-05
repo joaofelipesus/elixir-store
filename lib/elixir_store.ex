@@ -8,4 +8,5 @@ defmodule ElixirStore do
   """
 
   defdelegate create_store(params), to: ElixirStore.Store.Create, as: :call
+  defdelegate find_store(params), to: ElixirStore.Store.Find, as: :call
 end
