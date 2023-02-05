@@ -18,6 +18,10 @@ defmodule ElixirStoreWeb.ErrorView do
     %{errors: translate_errors(result)}
   end
 
+  def render("404.json", %{message: message}) do
+    %{errors: message}
+  end
+
   defp translate_errors(changeset) do
     Ecto.Changeset.traverse_errors(changeset, fn {msg, opts} ->
       Enum.reduce(opts, msg, fn {key, value}, acc ->

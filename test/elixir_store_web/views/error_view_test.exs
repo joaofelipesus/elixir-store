@@ -19,4 +19,12 @@ defmodule ElixirStoreWeb.ErrorViewTest do
 
     assert %{errors: %{segment: ["can't be blank"]}} == result
   end
+
+  describe "render/2" do
+    test "returns error message" do
+      result = render(ElixirStoreWeb.ErrorView, "404.json", %{message: "Model not found"})
+
+      assert result == %{errors: "Model not found"}
+    end
+  end
 end
