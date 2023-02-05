@@ -53,4 +53,35 @@ defmodule ElixirStoreWeb.StoresControllerTest do
       assert %{"errors" => "Store not found"} == response
     end
   end
+
+  describe "index/2" do
+    test "returns a list with stores", %{conn: conn} do
+      ElixirStore.create_store(%{name: "rei", segment: :games})
+      ElixirStore.create_store(%{name: "asuka", segment: :games})
+      ElixirStore.create_store(%{name: "shinji", segment: :games})
+
+      response =
+        conn
+        |> get(Routes.stores_path(conn, :index))
+        |> json_response(:ok)
+
+      assert [
+        %{
+          "id" => _,
+          "name" => "asuka",
+          "segment" => "games"
+        },
+        %{
+          "id" => _,
+          "name" => "rei",
+          "segment" => "games"
+        },
+        %{
+          "id" => _,
+          "name" => "shinji",
+          "segment" => "games"
+        }
+      ] = response
+    end
+  end
 end

@@ -3,6 +3,13 @@ defmodule ElixirStoreWeb.StoresController do
 
   action_fallback ElixirStoreWeb.FallbackController
 
+  def index(conn, _params) do
+    stores = ElixirStore.list_store()
+    conn
+    |> put_status(:ok)
+    |> render("index.json", %{stores: stores})
+  end
+
   def create(conn, %{"name" => name, "segment" => segment}) do
     %{name: name, segment: segment}
     |> ElixirStore.create_store()
