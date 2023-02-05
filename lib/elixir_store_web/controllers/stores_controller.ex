@@ -9,6 +9,11 @@ defmodule ElixirStoreWeb.StoresController do
     |> handle_response(conn)
   end
 
+  def show(conn, %{"id" => id}) do
+    ElixirStore.find_store(id)
+    |> handle_response(conn, :ok, "show.json")
+  end
+
   defp handle_response({:ok, store}, conn) do
     conn
     |> put_status(:created)
@@ -16,4 +21,13 @@ defmodule ElixirStoreWeb.StoresController do
   end
 
   defp handle_response({:error, _error} = error, _conn), do: error
+
+
+  defp handle_response({:error, _error} = error, _conn, _status, _view), do: error
+
+  defp handle_response({:ok, store}, conn, status, view) do
+    conn
+    |> put_status(status)
+    |> render(view, %{store: store})
+  end
 end

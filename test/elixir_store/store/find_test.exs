@@ -5,14 +5,14 @@ defmodule ElixirStore.Store.FindTest do
 
   describe "call/1" do
     test "returns an error message when received UUID is invalid" do
-      {:error, error_message} = Find.call("1")
+      {:error, %{message: error_message, status: :bad_request}} = Find.call("1")
 
       assert error_message === "Invalid UUID"
     end
 
     test "returns not found message, when received id don't belong to any store" do
       fake_uuid = "a9d5a65d-3b77-4622-869f-7a8b5ca9947c"
-      {:error, error_message} = Find.call(fake_uuid)
+      {:error, %{message: error_message, status: :not_found}} = Find.call(fake_uuid)
 
       assert "Store not found" == error_message
     end
