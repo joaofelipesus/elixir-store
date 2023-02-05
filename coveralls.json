@@ -2,6 +2,8 @@
   "skip_files": [
     "test/support",
     "lib/elixir_store/repo.ex",
-    "lib/elixir_store_web/channels/"
+    "lib/elixir_store_web/channels/",
+    "lib/elixir_store_web/telemetry.ex",
+    "lib/elixir_store_web/gettext.ex"
   ]
 }
