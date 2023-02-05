@@ -9,11 +9,11 @@ defmodule ElixirStore.StoreTest do
       result = Store.changeset(params)
 
       assert %Changeset{
-        changes: %{name: "games-store", segment: :games},
-        data: %Store{},
-        errors: [],
-        valid?: true
-      } = result
+               changes: %{name: "games-store", segment: :games},
+               data: %Store{},
+               errors: [],
+               valid?: true
+             } = result
     end
 
     test "return an invalid changeset, when params are invalid" do
@@ -21,11 +21,11 @@ defmodule ElixirStore.StoreTest do
       result = Store.changeset(params)
 
       assert %Changeset{
-        changes: %{segment: :games},
-        data: %Store{},
-        valid?: false,
-        errors: [name: {"can't be blank", [validation: :required]}]
-      } = result
+               changes: %{segment: :games},
+               data: %Store{},
+               valid?: false,
+               errors: [name: {"can't be blank", [validation: :required]}]
+             } = result
     end
   end
 
@@ -34,34 +34,35 @@ defmodule ElixirStore.StoreTest do
       result =
         %{name: "games-store", segment: :games}
         |> Store.changeset()
-        |> Repo.insert
+        |> Repo.insert()
 
       assert {
-        :ok,
-        %ElixirStore.Store{
-          id: _id,
-          inserted_at: _inserted_at,
-          name: "games-store",
-          segment: :games,
-          updated_at: _updated_at
-        }
-      } = result
+               :ok,
+               %ElixirStore.Store{
+                 id: _id,
+                 inserted_at: _inserted_at,
+                 name: "games-store",
+                 segment: :games,
+                 updated_at: _updated_at
+               }
+             } = result
     end
 
     test "returns error message, when name is already in use" do
       %{name: "games-store", segment: :games}
-        |> Store.changeset()
-        |> Repo.insert
+      |> Store.changeset()
+      |> Repo.insert()
 
       {:error, result} =
         %{name: "games-store", segment: :games}
         |> Store.changeset()
-        |> Repo.insert
+        |> Repo.insert()
 
       assert %Changeset{
         errors: [
-          name: {"has already been taken",
-          [constraint: :unique, constraint_name: "stores_unique_name_index"]}
+          name:
+            {"has already been taken",
+             [constraint: :unique, constraint_name: "stores_unique_name_index"]}
         ],
         valid?: false,
         data: %Store{}

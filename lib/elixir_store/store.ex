@@ -6,7 +6,8 @@ defmodule ElixirStore.Store do
 
   schema "stores" do
     field :name, :string
-    field :segment, Ecto.Enum, values: [:games, :sports] # exemplo de Enum
+    # exemplo de Enum
+    field :segment, Ecto.Enum, values: [:games, :sports]
     timestamps()
   end
 
@@ -14,6 +15,7 @@ defmodule ElixirStore.Store do
     %__MODULE__{}
     |> cast(params, [:name, :segment])
     |> validate_required([:name, :segment])
-    |> unique_constraint(:name, name: :stores_unique_name_index) # usar name ztktn
+    # usar name ztktn
+    |> unique_constraint(:name, name: :stores_unique_name_index)
   end
 end
