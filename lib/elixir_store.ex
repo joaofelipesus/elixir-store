@@ -6,4 +6,6 @@ defmodule ElixirStore do
   Contexts are also responsible for managing your data, regardless
   if it comes from the database, an external API or others.
   """
+
+  defdelegate create_store(params), to: ElixirStore.Store.Create, as: :call
 end
