@@ -2,7 +2,6 @@ defmodule ElixirStore.Store.FindTest do
   use ElixirStore.DataCase
   alias ElixirStore.Store.Find
 
-
   describe "call/1" do
     test "returns an error message when received UUID is invalid" do
       {:error, %{message: error_message, status: :bad_request}} = Find.call("1")

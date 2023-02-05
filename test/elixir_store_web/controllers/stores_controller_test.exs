@@ -84,4 +84,28 @@ defmodule ElixirStoreWeb.StoresControllerTest do
       ] = response
     end
   end
+
+  describe "delete/2" do
+    test "delete store and return status, when params are valid", %{conn: conn} do
+      {:ok, store} = ElixirStore.create_store(%{"name" => "nerv store", "segment" => "games"})
+      response =
+        conn
+        |> delete(Routes.stores_path(conn, :show, store.id))
+
+      assert %Plug.Conn{
+        status: 200
+      } = response
+    end
+
+    test "returns an error, when received id don't belong to a store", %{conn: conn} do
+      store_id = "a9d5a65d-3b77-4622-869f-7a8b5ca9947c"
+
+      response =
+        conn
+        |> delete(Routes.stores_path(conn, :show, store_id))
+        |> json_response(:not_found)
+
+      assert %{"errors" => "Store not found"} == response
+    end
+  end
 end

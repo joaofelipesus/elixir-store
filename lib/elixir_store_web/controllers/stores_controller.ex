@@ -21,11 +21,25 @@ defmodule ElixirStoreWeb.StoresController do
     |> handle_response(conn, :ok, "show.json")
   end
 
+  def delete(conn, %{"id" => id}) do
+    id
+    |> ElixirStore.delete_store()
+    |> handle_delete(conn)
+  end
+
   defp handle_response({:error, _error} = error, _conn, _status, _view), do: error
 
   defp handle_response({:ok, store}, conn, status, view) do
     conn
     |> put_status(status)
     |> render(view, %{store: store})
+  end
+
+  defp handle_delete({:error, _error} = error, _conn), do: error
+
+  defp handle_delete({:ok, _store}, conn) do
+    conn
+    |> put_status(:ok)
+    |> text("")
   end
 end
