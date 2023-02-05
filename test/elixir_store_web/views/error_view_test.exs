@@ -12,4 +12,11 @@ defmodule ElixirStoreWeb.ErrorViewTest do
     assert render(ElixirStoreWeb.ErrorView, "500.json", []) ==
              %{errors: %{detail: "Internal Server Error"}}
   end
+
+  test "renders 400.json" do
+    {:error, changeset} = ElixirStore.create_store(%{name: "some-cool-store"})
+    result = render(ElixirStoreWeb.ErrorView, "400.json", result: changeset)
+
+    assert %{errors: %{segment: ["can't be blank"]}} == result
+  end
 end
