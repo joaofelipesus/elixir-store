@@ -11,8 +11,12 @@ defmodule ElixirStore.Store do
     timestamps()
   end
 
-  def changeset(params) do
-    %__MODULE__{}
+  def changeset(params), do: create_changeset(%__MODULE__{}, params)
+
+  def changeset(store, params), do: create_changeset(store, params)
+
+  defp create_changeset(sotre_or_module, params) do
+    sotre_or_module
     |> cast(params, [:name, :segment])
     |> validate_required([:name, :segment])
     # usar name ztktn

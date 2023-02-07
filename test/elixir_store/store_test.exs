@@ -3,7 +3,7 @@ defmodule ElixirStore.StoreTest do
   alias ElixirStore.Store
   alias Ecto.Changeset
 
-  describe "changeset" do
+  describe "changeset/1" do
     test "return a valid changeset, when params are valid" do
       params = %{name: "games-store", segment: :games}
       result = Store.changeset(params)
@@ -19,6 +19,34 @@ defmodule ElixirStore.StoreTest do
     test "return an invalid changeset, when params are invalid" do
       params = %{segment: :games}
       result = Store.changeset(params)
+
+      assert %Changeset{
+               changes: %{segment: :games},
+               data: %Store{},
+               valid?: false,
+               errors: [name: {"can't be blank", [validation: :required]}]
+             } = result
+    end
+  end
+
+  describe "changeset/2" do
+    test "return a valid changeset, when params are valid" do
+      {:ok, store} = ElixirStore.create_store(%{name: "nerv", segment: :sports})
+      params = %{name: "games-store", segment: :games}
+      result = Store.changeset(store, params)
+
+      assert %Changeset{
+               changes: %{name: "games-store", segment: :games},
+               data: %Store{},
+               errors: [],
+               valid?: true
+             } = result
+    end
+
+    test "return an invalid changeset, when params are invalid" do
+      {:ok, store} = ElixirStore.create_store(%{name: "nerv", segment: :sports})
+      params = %{name: nil, segment: :games}
+      result = Store.changeset(store, params)
 
       assert %Changeset{
                changes: %{segment: :games},
