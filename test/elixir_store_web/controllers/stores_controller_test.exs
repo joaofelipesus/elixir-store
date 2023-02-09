@@ -1,5 +1,6 @@
 defmodule ElixirStoreWeb.StoresControllerTest do
   use ElixirStoreWeb.ConnCase
+  alias ElixirStore.Store
 
   describe "create/2" do
     test "creates a store and returns it, when params are valid", %{conn: conn} do
@@ -107,6 +108,36 @@ defmodule ElixirStoreWeb.StoresControllerTest do
       response =
         conn
         |> delete(Routes.stores_path(conn, :show, store_id))
+        |> json_response(:not_found)
+
+      assert %{"errors" => "Store not found"} == response
+    end
+  end
+
+  describe "update/2" do
+    test "updates and returns store, when params are valid", %{conn: conn} do
+      {:ok, %Store{id: store_id}} = ElixirStore.create_store(%{name: "umbrella", segment: :games})
+      params = %{name: "NERV", segment: :sports}
+
+      response =
+        conn
+        |> put(Routes.stores_path(conn, :update, store_id, params))
+        |> json_response(:ok)
+
+      assert %{
+        "id" => _id,
+        "name" => "NERV",
+        "segment" => "sports"
+      } = response
+    end
+
+    test "returns error message, when params has errors", %{conn: conn} do
+      store_id = "a9d5a65d-3b77-4622-869f-7a8b5ca9947c"
+      params = %{name: "NERV", segment: :sports}
+
+      response =
+        conn
+        |> put(Routes.stores_path(conn, :update, store_id, params))
         |> json_response(:not_found)
 
       assert %{"errors" => "Store not found"} == response

@@ -11,4 +11,5 @@ defmodule ElixirStore do
   defdelegate find_store(params), to: ElixirStore.Store.Find, as: :call
   defdelegate list_store(), to: ElixirStore.Store.List, as: :call
   defdelegate delete_store(params), to: ElixirStore.Store.Delete, as: :call
+  defdelegate update_store(params), to: ElixirStore.Store.Update, as: :call
 end

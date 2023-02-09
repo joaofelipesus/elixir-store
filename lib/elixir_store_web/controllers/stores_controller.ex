@@ -11,14 +11,20 @@ defmodule ElixirStoreWeb.StoresController do
     |> render("index.json", %{stores: stores})
   end
 
+  def show(conn, %{"id" => id}) do
+    ElixirStore.find_store(id)
+    |> handle_response(conn, :ok, "show.json")
+  end
+
   def create(conn, %{"name" => name, "segment" => segment}) do
     %{name: name, segment: segment}
     |> ElixirStore.create_store()
     |> handle_response(conn, :created, "show.json")
   end
 
-  def show(conn, %{"id" => id}) do
-    ElixirStore.find_store(id)
+  def update(conn, %{"id" => id, "name" => name, "segment" => segment}) do
+    %{id: id, name: name, segment: segment}
+    |> ElixirStore.update_store()
     |> handle_response(conn, :ok, "show.json")
   end
 
